@@ -37,6 +37,7 @@ func convert() {
 func square() {
 	var a float64
 	var b float64
+	var c float64
 
 	fmt.Println("Введите катет a:")
 	fmt.Scanln(&a)
@@ -44,7 +45,10 @@ func square() {
 	fmt.Println("Введите катет b:")
 	fmt.Scanln(&b)
 
-	fmt.Printf("Гипотенуза треугольника равна: %.2f\n", math.Sqrt(math.Pow(a, 2)+math.Pow(b, 2)))
+	c = math.Sqrt(math.Pow(a, 2) + math.Pow(b, 2))
+
+	fmt.Printf("Гипотенуза треугольника равна: %.2f\n", c)
+	fmt.Printf("Периметр треугольника равна: %.2f\n", a+b+c)
 	fmt.Printf("Площадь треугольника равна: %.2f\n", a*b*0.5)
 }
 
