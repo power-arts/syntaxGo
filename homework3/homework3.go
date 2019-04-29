@@ -19,6 +19,8 @@ type Vehicle struct {
 	EcologyClass      string
 }
 
+var queue []string //очередь
+
 func main() {
 
 	truckMan := Vehicle{
@@ -61,4 +63,51 @@ func main() {
 
 	fmt.Println(crossoverHyundai)
 
+	fmt.Println(queue)
+
+	QueuePush("Первый")
+
+	QueuePush("Второй")
+
+	QueuePush("Последний")
+
+	fmt.Println(queue)
+
+	fmt.Println(QueueShift())
+
+	fmt.Println(QueueShift())
+
+	fmt.Println(QueueShift())
+
+	fmt.Println(QueueShift())
+
+}
+
+/*
+ * Добавление в очередь
+ */
+func QueuePush(newElement string) {
+	queue = append(queue, newElement)
+}
+
+/*
+ * Получение первого элемента
+ */
+func QueueShift() string {
+	numsOfElements := len(queue)
+	if numsOfElements == 0 {
+		return ""
+	}
+	ret := queue[0]
+
+	newQueue := make([]string, 0)
+	for i, v := range queue {
+		if i != 0 {
+			newQueue = append(newQueue, v)
+		}
+	}
+
+	queue = newQueue
+
+	return ret
 }
