@@ -5,7 +5,11 @@ package main
  * Stepanov Anton, 29.04.2019
  */
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+)
 
 type Vehicle struct {
 	Type              string
@@ -17,6 +21,30 @@ type Vehicle struct {
 	EngineRunning     bool
 	WindowsOpen       bool
 	EcologyClass      string
+}
+
+type Contact struct {
+	FirstName string
+	LastName  string
+}
+
+type Phones struct {
+	Mobile string
+	Work   string
+	Home   string
+	Other  string
+}
+
+type AddressBookEntity struct {
+	Contact Contact
+	Phones  Phones
+	Email   string
+	Address string
+	Notes   string
+}
+
+type AddressBook struct {
+	Entities []AddressBookEntity
 }
 
 var queue []string //очередь
@@ -81,6 +109,33 @@ func main() {
 
 	fmt.Println(QueueShift())
 
+	newBook := AddressBook{}
+
+	newEntity := AddressBookEntity{}
+	newEntity.Contact.FirstName = "Anton"
+	newEntity.Contact.LastName = "Stepanov"
+	newEntity.Email = "as@ifdev.ru"
+	newEntity.Phones.Home = "+7495250XXYY"
+	newEntity.Phones.Mobile = "+7977250XXYY"
+	newEntity.Phones.Mobile = "+7977250XXYY"
+
+	newBook.Entities = append(newBook.Entities, newEntity)
+
+	newBook.Save()
+
+}
+
+func (a AddressBook) Save() {
+	jsonBook, err := json.Marshal(a.Entities)
+	if err != nil {
+		panic(err)
+	}
+	file, err := os.Create("addressbook.json")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	file.Write(jsonBook)
 }
 
 /*
